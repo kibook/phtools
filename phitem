@@ -1,26 +1,11 @@
 #!/bin/sh
 
+[ "$#" -ge 2 ] || exit 1
+
 kind="$1"
 disp="$2"
-path="$3"
+path="${3:-$disp}"
+host="${4:-$SERVER_HOST}"
+port="${5:-${SERVER_PORT:-70}}"
 
-if [ ! "$4" ]
-then
-	host="$SERVER_HOST"
-else
-	host="$4"
-fi
-
-if [ ! "$5" ]
-then
-	if [ "$SERVER_PORT" ]
-	then
-		port="$SERVER_PORT"
-	else
-		port=70
-	fi
-else
-	port="$5"
-fi
-
-printf "%s%s\t%s\t%s\t%s\r\n" "$kind" "$disp" "$path" "$host" "$port"
+printf '%s%s\t%s\t%s\t%s\r\n' "$kind" "$disp" "$path" "$host" "$port" 2>/dev/null

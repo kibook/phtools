@@ -3,7 +3,7 @@
 IFS=''
 while read -r line
 do
-	if echo "$line" | grep -q "	"
+	if echo "$line" | fgrep -q "	"
 	then
 		kind=$(echo "$line" | cut -f 1 | cut -c 1)
 		disp=$(echo "$line" | cut -f 1 | cut -c 2-)
@@ -41,8 +41,8 @@ do
 			fi
 		fi
 
-		printf "%s%s\t%s\t%s\t%s\r\n" "$kind" "$disp" "$path" "$host" "$port"
+		phitem "$kind" "$disp" "$path" "$host" "$port"
 	else
-		printf "i%s\tfake\t(NULL)\t0\r\n" "$(echo "$line" | tr -d '\r\n')"
+		phinfo "$line"
 	fi
 done
